@@ -46,24 +46,10 @@ powershell -ExecutionPolicy Bypass -File provision-board.ps1 -Ref v1.2.0
 
 ## macOS
 
-**Option A — Double-click (simplest)**
-1. Double-click `provision-board.command`.
-2. macOS will likely block it the first time with *"cannot be opened
-   because it is from an unidentified developer."* Right-click
-   (Control-click) `provision-board.command` → **Open** → **Open** again in
-   the dialog. You only need to do this once.
-3. A Terminal window walks you through the process. Type `y` and press
-   Enter to confirm.
-
-**Option B — Terminal**
+**Terminal:**
 ```bash
 cd ~/Downloads   # or wherever you saved the files
 bash provision-board.sh
-```
-
-**Option C — No download needed (fast path)**
-```bash
-curl -fsSL https://raw.githubusercontent.com/CoffeeTronics/PyKit-Explorer-Code-Modules/main/provision-board.sh | bash
 ```
 
 ---
