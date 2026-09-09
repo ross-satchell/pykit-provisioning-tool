@@ -1,9 +1,14 @@
 # PyKit Explorer - Board Provisioning Tool
 
 This tool fully provisions a **brand-new** PyKit Explorer board. It downloads
-the latest PyKit Explorer content straight from GitHub and writes it to the
+the latest PyKit Explorer content from the Microchip Bitbucket repository and writes it to the
 board's `CIRCUITPY` drive — no need to separately download this repo, and no
 Python install required on your computer.
+
+The source repository is `pykit-explorer-code-modules` on Microchip Bitbucket,
+using the `master` branch. Because this repository is private, the provisioner
+uses Git's normal Bitbucket credential prompt. Git must be installed and your
+account must have read access to the repository.
 
 **This is a one-time setup step for a fresh board.** It overwrites `code.py`,
 so don't run it on a board a student has already been coding on — it will
@@ -62,10 +67,8 @@ cd ~/Downloads   # or wherever you saved provision-board.sh
 bash provision-board.sh
 ```
 
-**No download needed (fast path):**
-```bash
-curl -fsSL https://raw.githubusercontent.com/CoffeeTronics/PyKit-Explorer-Code-Modules/main/provision-board.sh | bash
-```
+The script performs a shallow Git clone of the repository. There is no
+anonymous fast path because the repository requires Bitbucket authentication.
 
 ---
 
@@ -74,11 +77,11 @@ curl -fsSL https://raw.githubusercontent.com/CoffeeTronics/PyKit-Explorer-Code-M
 | Flag | What it does |
 |---|---|
 | `--yes` | Skip the confirmation prompt — useful when provisioning many boards back-to-back |
-| `--ref <branch-or-tag>` | Provision from a specific branch or release tag instead of `main` |
+| `--ref <branch-or-tag>` | Provision from a specific branch or release tag instead of `master` |
 
 ```bash
 bash provision-board.sh --yes
-curl -fsSL https://raw.githubusercontent.com/CoffeeTronics/PyKit-Explorer-Code-Modules/main/provision-board.sh | bash -s -- --ref v1.2.0
+bash provision-board.sh --ref v1.2.0
 ```
 
 ## Flags (Windows)
@@ -101,8 +104,8 @@ curl -fsSL https://raw.githubusercontent.com/CoffeeTronics/PyKit-Explorer-Code-M
 - **Windows: window opens and instantly closes** — use
   `provision-board.bat`, not the `.ps1` file directly (see the Windows
   section above).
-- An internet connection is required — the script downloads the latest
-  content from GitHub each time it runs.
+- Git, an internet connection, and Bitbucket access are required — the script
+  clones the latest content from the `master` branch each time it runs.
 - A `PROVISION_INFO.txt` file is written to the board recording which
   commit it was provisioned from, useful for troubleshooting later.
 
