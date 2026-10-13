@@ -2,7 +2,7 @@
     PyKit Explorer - Board Provisioning Script (Windows)
     ------------------------------------------------------
     Fully provisions a fresh PyKit Explorer board by downloading the code
-    modules from Bitbucket and copying the runtime content onto the CIRCUITPY
+    modules from GitHub and copying the runtime content onto the CIRCUITPY
     drive. No local copy of the repo and no Python install on the host
     machine are required.
 
@@ -31,16 +31,15 @@
 
 param(
     [switch]$Force,
-    [string]$Ref = "master"
+    [string]$Ref = "main"
 )
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"   # Invoke-WebRequest is much faster with the progress bar off
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
-$RepoHost    = "bitbucket.microchip.com"
-$RepoProject = "~c52467"
-$RepoSlug    = "pykit-explorer-code-modules"
+$GitHubOrg   = "MicrochipTech"
+$RepoName    = "PyKit-Explorer-Code-Modules"
 
 # Content copied to the root of CIRCUITPY. Update these if the repo structure changes.
 $FoldersToCopy = @("API", "AudioFiles", "Fonts", "Images", "lib")
@@ -48,7 +47,7 @@ $FilesToCopy   = @("README.md", "code.py", "pykit_explorer.py")
 
 function Invoke-Provisioning {
     Write-Host "=== PyKit Explorer Board Provisioner ===" -ForegroundColor Cyan
-    Write-Host "Source: $RepoHost/$RepoProject/$RepoSlug@$Ref"
+    Write-Host "Source: github.com/$GitHubOrg/$RepoName@$Ref"
 
     # --- 1. Find the CIRCUITPY drive -------------------------------------------
     $volumes = Get-Volume -ErrorAction SilentlyContinue | Where-Object { $_.FileSystemLabel -eq "CIRCUITPY" }
@@ -74,7 +73,7 @@ function Invoke-Provisioning {
     # --- 2. Confirm before doing anything destructive ---------------------------
     if (-not $Force) {
         Write-Host ""
-        Write-Host "This will REPLACE the following on $DriveRoot with the version from Bitbucket:" -ForegroundColor Yellow
+        Write-Host "This will REPLACE the following on $DriveRoot with the version from GitHub:" -ForegroundColor Yellow
         Write-Host ("  Folders: " + ($FoldersToCopy -join ", "))
         Write-Host ("  Files:   " + ($FilesToCopy -join ", "))
         Write-Host "Any code or data currently in those folders/files on the board will be lost." -ForegroundColor Yellow
@@ -91,11 +90,11 @@ function Invoke-Provisioning {
     New-Item -ItemType Directory -Path $TempDir | Out-Null
 
     try {
-        $RepoUrl = "https://$RepoHost/scm/$RepoProject/$RepoSlug.git"
+        $RepoUrl = "https://github.com/$GitHubOrg/$RepoName.git"
         Write-Host "Cloning $RepoUrl@$Ref ..."
         & git clone --depth 1 --branch $Ref $RepoUrl $RepoDir
         if ($LASTEXITCODE -ne 0) {
-            throw "Git clone failed. Confirm Git is installed and your Bitbucket credentials have read access."
+            throw "Git clone failed. Confirm Git is installed and you have network access to GitHub."
         }
 
         # --- 4. Copy folders and files onto the drive ---------------------------
@@ -126,9 +125,9 @@ function Invoke-Provisioning {
         # --- 5. Write provenance info (best-effort, never fails the run) --------
         try {
             $Sha  = (& git -C $RepoDir rev-parse HEAD).Substring(0, 7)
-            $Line = "Provisioned from $RepoHost/$RepoProject/$RepoSlug@$Ref (commit $Sha) on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+            $Line = "Provisioned from github.com/$GitHubOrg/$RepoName@$Ref (commit $Sha) on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
         } catch {
-            $Line = "Provisioned from $RepoHost/$RepoProject/$RepoSlug@$Ref on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+            $Line = "Provisioned from github.com/$GitHubOrg/$RepoName@$Ref on $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
         }
         Set-Content -Path (Join-Path $DriveRoot "PROVISION_INFO.txt") -Value $Line
 
