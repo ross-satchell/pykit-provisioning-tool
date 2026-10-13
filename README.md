@@ -66,7 +66,7 @@ bash provision-board.sh
 **Terminal:**
 
 ```bash
-cd ~/Downloads   # or wherever you saved provision-board.sh
+cd ~/Downloads/pykit-explorer-provisioning-tool	(press tab to complete, then press enter)   # or wherever you saved provision-board.sh
 bash provision-board.sh
 ```
 
