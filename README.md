@@ -23,9 +23,13 @@ already there with the same name:
 Before running any of the scripts below, plug in the board via USB. It
 should show up as a drive named `CIRCUITPY`.
 
+Download the ZIP file and extract it. Extracting to your Downloads folder is assumed for the instructions below.
+
 ---
 
 ## Windows
+
+Open the folder that you just extracted. It will be called `pykit-provisioning-tool-main`
 
 **Double-click `provision-board.bat`.**
 
