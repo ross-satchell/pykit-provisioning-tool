@@ -41,6 +41,7 @@ the result.
 > directly.
 
 **Command-line / advanced usage:**
+
 ```
 powershell -ExecutionPolicy Bypass -File provision-board.ps1
 powershell -ExecutionPolicy Bypass -File provision-board.ps1 -Force
@@ -52,8 +53,9 @@ powershell -ExecutionPolicy Bypass -File provision-board.ps1 -Ref v1.2.0
 ## macOS
 
 **Terminal:**
+
 ```bash
-cd ~/Downloads   # or wherever you saved the files
+cd ~/Downloads/pykit-explorer-provisioning-tool	(press tab to complete, then press enter)   # or wherever you saved the files
 bash provision-board.sh
 ```
 
@@ -62,6 +64,7 @@ bash provision-board.sh
 ## Linux
 
 **Terminal:**
+
 ```bash
 cd ~/Downloads   # or wherever you saved provision-board.sh
 bash provision-board.sh
@@ -74,10 +77,10 @@ anonymous fast path because the repository requires Bitbucket authentication.
 
 ## Flags (macOS / Linux)
 
-| Flag | What it does |
-|---|---|
-| `--yes` | Skip the confirmation prompt — useful when provisioning many boards back-to-back |
-| `--ref <branch-or-tag>` | Provision from a specific branch or release tag instead of `master` |
+| Flag                      | What it does                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| `--yes`                 | Skip the confirmation prompt — useful when provisioning many boards back-to-back |
+| `--ref <branch-or-tag>` | Provision from a specific branch or release tag instead of`master`              |
 
 ```bash
 bash provision-board.sh --yes
@@ -86,10 +89,10 @@ bash provision-board.sh --ref v1.2.0
 
 ## Flags (Windows)
 
-| Flag | What it does |
-|---|---|
-| `-Force` | Skip the confirmation prompt |
-| `-Ref <branch-or-tag>` | Provision from a specific branch or release tag instead of `main` |
+| Flag                     | What it does                                                       |
+| ------------------------ | ------------------------------------------------------------------ |
+| `-Force`               | Skip the confirmation prompt                                       |
+| `-Ref <branch-or-tag>` | Provision from a specific branch or release tag instead of`main` |
 
 ---
 
@@ -113,9 +116,9 @@ bash provision-board.sh --ref v1.2.0
 
 ## Files in this package
 
-| File | Platform | Purpose |
-|---|---|---|
-| `provision-board.bat` | Windows | Double-click entry point |
-| `provision-board.ps1` | Windows | The actual script (called by the `.bat`) |
-| `provision-board.command` | macOS | Double-click entry point |
-| `provision-board.sh` | macOS / Linux | The actual script |
+| File                        | Platform      | Purpose                                   |
+| --------------------------- | ------------- | ----------------------------------------- |
+| `provision-board.bat`     | Windows       | Double-click entry point                  |
+| `provision-board.ps1`     | Windows       | The actual script (called by the`.bat`) |
+| `provision-board.command` | macOS         | Double-click entry point                  |
+| `provision-board.sh`      | macOS / Linux | The actual script                         |
